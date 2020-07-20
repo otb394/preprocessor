@@ -90,7 +90,7 @@ def data_prep(path):
         # 3. Convert categorical into numeric as per one-hot or ordinal encoding
         # 4. Can try min-max scaling
         missing_values = ["?"]
-        training_trim = pd.read_csv(path, na_values=missing_values, encoding='UTF-8', header=None)#encoding='ISO-8859-1')#
+        training_trim = pd.read_csv(path, na_values=missing_values, encoding='UTF-8')#, header=None)#encoding='ISO-8859-1')#
         print('NULL COLS')
         nul_col = training_trim.isna().any()
         nul_col.to_csv('temp_null_cols.csv')
@@ -103,9 +103,12 @@ def data_prep(path):
         orig_dim = len(training_x.columns)
         print('Original dim = ' + str(orig_dim))
         print('No. of instances = ' + str(training_x.shape[0]))
-        #cols = training_x.select_dtypes(include='object').columns
-        #training_x = pd.concat([training_x, pd.get_dummies(training_x[cols], prefix=cols)], axis=1).drop(cols, axis=1)
-        #print(training_x.dtypes)
+        cols = training_x.select_dtypes(include='object').columns
+        print('cols = ' + str(cols))
+        print('no. of cols = ' + str(len(cols)))
+        if (len(cols) != 0):
+            training_x = pd.concat([training_x, pd.get_dummies(training_x[cols], prefix=cols)], axis=1).drop(cols, axis=1)
+        print(training_x.dtypes)
 
         # remove the samples in training and test set with label "deleted"
         training_y, training_x = preprocess1(training_y, training_x)
@@ -116,7 +119,8 @@ def data_prep(path):
         scaler = MinMaxScaler()
 
         tot = training_x.shape[0]
-        sample_size = math.floor(tot * 1.0)
+        #sample_size = math.floor(tot * 1.0)
+        sample_size = math.floor(tot * 0.2)
         training_x = training_x.head(n = sample_size)
         #training_x = training_x.iloc[16000:24000,:]
         print('Actual no. of rows = ' + str(training_x.shape[0]))
@@ -139,7 +143,9 @@ def main(config):
                 cost = []
                 Acc = []
                 #path = path + '/subject_systems'
-                files = get_files(path, ['csv'])
+                #files = get_files(path, ['csv'])
+                #files = [path + '/adult.data.csv']
+                files = [path + '/default.csv']
                 print('Files:')
                 print(files)
 
