@@ -84,7 +84,7 @@ def get_files(path, extensions):
 
 def main(config):
         warnings.filterwarnings("ignore", category=DeprecationWarning)
-        projects = ['fairway']
+        projects = ['seacraft']
         for project in projects:
                 start_time = time.time()
                 # path = r'data/total_features/' + project
@@ -112,39 +112,43 @@ def main(config):
 
                 ans = []
                 for i in range(len(files)):
-                    print('i = ' + str(i))
-                    fil = files[i]
-                    name = file_names[i]
-                    print('fil = ' + str(fil))
-                    print('name = ' + str(name))
+                    try:
+                        print('i = ' + str(i))
+                        fil = files[i]
+                        name = file_names[i]
+                        print('fil = ' + str(fil))
+                        print('name = ' + str(name))
 
-                    training_data = pd.read_csv(fil)
-                    num_inst = training_data.shape[0]
-                    orig_dim = training_data.shape[1]
+                        training_data = pd.read_csv(fil)
+                        num_inst = training_data.shape[0]
+                        orig_dim = training_data.shape[1]
 
-                    # Sampling
-                    #sample_size = min(2000, num_inst)
-                    #training_data = training_data.head(n = sample_size)
-                    print('Original no. of instances = ' + str(num_inst))
-                    #num_inst = sample_size
+                        # Sampling
+                        #sample_size = min(2000, num_inst)
+                        #training_data = training_data.head(n = sample_size)
+                        print('Original no. of instances = ' + str(num_inst))
+                        #num_inst = sample_size
 
-                    #print("Training data=")
-                    #print(training_data)
-                                                            
-                    # intrinDimEstimation
-                    training_data = np.asarray(training_data)
-                    dataset = DatasetWrapper(training_data, config)
-                    print(">> creating intrinsic dimension solver")
-                    solver = IntrinDimSolver(dataset, config)
-                    print(">> solving...")
-                    #solver.show_curve(config.logrs)
-                    val = solver.show_curve(config.logrs)
-                    val2 = solver.show_curve(config.logrs, version = 2)
-                    print(">> task finished")
-                    if (name.startswith('processed_')):
-                        name = name[10:]
-                    ret = [name, orig_dim, val, val2, num_inst]
-                    ans.append(ret)
+                        #print("Training data=")
+                        #print(training_data)
+                                                                
+                        # intrinDimEstimation
+                        training_data = np.asarray(training_data)
+                        dataset = DatasetWrapper(training_data, config)
+                        print(">> creating intrinsic dimension solver")
+                        solver = IntrinDimSolver(dataset, config)
+                        print(">> solving...")
+                        #solver.show_curve(config.logrs)
+                        val = solver.show_curve(config.logrs)
+                        val2 = solver.show_curve(config.logrs, version = 2)
+                        print(">> task finished")
+                        if (name.startswith('processed_')):
+                            name = name[10:]
+                        ret = [name, orig_dim, val, val2, num_inst]
+                        ans.append(ret)
+                    except:
+                        print(str(file_names[i]) + ' threw error')
+
 
                 ans_df = pd.DataFrame(ans, columns=['Dataset', 'original dim', 'intrinsic dim_L1', 'intrinsic dim_L2', 'No. of instances'])
                 ans_df.to_csv('calculator_output/' + project + '_output.csv', index=False)
