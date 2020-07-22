@@ -143,9 +143,9 @@ def main(config):
                 cost = []
                 Acc = []
                 #path = path + '/subject_systems'
-                #files = get_files(path, ['csv'])
+                files = get_files(path, ['csv'])
                 #files = [path + '/adult.data.csv']
-                files = [path + '/default.csv']
+                #files = [path + '/default.csv']
                 print('Files:')
                 print(files)
 
@@ -181,7 +181,7 @@ def main(config):
                     ans.append(ret)
 
                 ans_df = pd.DataFrame(ans, columns=['Dataset', 'original dim', 'intrinsic dim_L1', 'intrinsic dim_L2', 'No. of instances'])
-                ans_df.to_csv('temp_output.csv', index=False)
+                ans_df.to_csv('calculator_output/' + project + '_output.csv', index=False)
 
 if __name__ == "__main__":
     from utils import Logger
