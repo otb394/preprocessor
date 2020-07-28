@@ -84,7 +84,7 @@ def get_files(path, extensions):
 
 def main(config):
         warnings.filterwarnings("ignore", category=DeprecationWarning)
-        projects = ['fairway']
+        projects = ['uci']
         for project in projects:
                 start_time = time.time()
                 # path = r'data/total_features/' + project
@@ -96,7 +96,7 @@ def main(config):
                 Acc = []
                 #path = path + '/subject_systems'
                 files = get_files(path, ['csv'])
-                #files = [path + '/processed_adult.data.csv']
+                #files = [path + '/adult.csv']
                 #files = [path + '/contraceptive.csv']
                 #exception_list = ['processed_data/fairway/processed_compas-scores-two-years.csv']
                 #exception_set = set(exception_list)
@@ -119,7 +119,7 @@ def main(config):
                         print('fil = ' + str(fil))
                         print('name = ' + str(name))
 
-                        training_data = pd.read_csv(fil)#, header=None)
+                        training_data = pd.read_csv(fil, header=None)
                         num_inst = training_data.shape[0]
                         orig_dim = training_data.shape[1]
 
@@ -146,8 +146,9 @@ def main(config):
                             name = name[10:]
                         ret = [name, orig_dim, val, val2, num_inst]
                         ans.append(ret)
-                    except:
+                    except Exception as e:
                         print(str(file_names[i]) + ' threw error')
+                        print(e)
 
 
                 ans_df = pd.DataFrame(ans, columns=['Dataset', 'original dim', 'intrinsic dim_L1', 'intrinsic dim_L2', 'No. of instances'])
