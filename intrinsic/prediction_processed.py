@@ -95,8 +95,8 @@ def main(config):
                 cost = []
                 Acc = []
                 #path = path + '/subject_systems'
-                #files = get_files(path, ['csv'])
-                files = [path + '/processed_adult.data.csv']
+                files = get_files(path, ['csv'])
+                #files = [path + '/processed_adult.data.csv']
                 #files = [path + '/contraceptive.csv']
                 #exception_list = ['processed_data/fairway/processed_compas-scores-two-years.csv']
                 #exception_set = set(exception_list)
