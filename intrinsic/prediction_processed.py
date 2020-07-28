@@ -84,7 +84,7 @@ def get_files(path, extensions):
 
 def main(config):
         warnings.filterwarnings("ignore", category=DeprecationWarning)
-        projects = ['uci']
+        projects = ['uci_error']
         for project in projects:
                 start_time = time.time()
                 # path = r'data/total_features/' + project
