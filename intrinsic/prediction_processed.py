@@ -84,7 +84,7 @@ def get_files(path, extensions):
 
 def main(config):
         warnings.filterwarnings("ignore", category=DeprecationWarning)
-        projects = ['seacraft']
+        projects = ['fairway']
         for project in projects:
                 start_time = time.time()
                 # path = r'data/total_features/' + project
@@ -95,9 +95,9 @@ def main(config):
                 cost = []
                 Acc = []
                 #path = path + '/subject_systems'
-                files = get_files(path, ['csv'])
-                #files = [path + '/processed_compas-scores-two-years.csv']
-                #files = [path + '/default.csv']
+                #files = get_files(path, ['csv'])
+                files = [path + '/processed_adult.data.csv']
+                #files = [path + '/contraceptive.csv']
                 #exception_list = ['processed_data/fairway/processed_compas-scores-two-years.csv']
                 #exception_set = set(exception_list)
                 #files = [x for x in files if x not in exception_set]
@@ -119,7 +119,7 @@ def main(config):
                         print('fil = ' + str(fil))
                         print('name = ' + str(name))
 
-                        training_data = pd.read_csv(fil)
+                        training_data = pd.read_csv(fil)#, header=None)
                         num_inst = training_data.shape[0]
                         orig_dim = training_data.shape[1]
 
