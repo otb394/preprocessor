@@ -119,7 +119,7 @@ def main(config):
                         print('fil = ' + str(fil))
                         print('name = ' + str(name))
 
-                        training_data = pd.read_csv(fil, header=None)
+                        training_data = pd.read_csv(fil)
                         num_inst = training_data.shape[0]
                         orig_dim = training_data.shape[1]
                         print('Original dimensions are = ' + str(orig_dim))
