@@ -122,6 +122,7 @@ def main(config):
                         training_data = pd.read_csv(fil, header=None)
                         num_inst = training_data.shape[0]
                         orig_dim = training_data.shape[1]
+                        print('Original dimensions are = ' + str(orig_dim))
 
                         # Sampling
                         #sample_size = min(2000, num_inst)
